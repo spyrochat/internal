@@ -1,6 +1,7 @@
 package main
 
 import (
+	"spyrochat/handlers/ws/utils"
 	"spyrochat/middlewares"
 	"spyrochat/routes"
 
@@ -25,7 +26,14 @@ func main() {
 
    //defer ln.Close()
 	//defer os.Remove(SOCK_FILE)
-	
+
+   // --- Create the worker pool ---
+   const workerCount = 10
+
+   for w := 0; w < workerCount; w++ {
+      go utils.ReplyMessages()
+   }
+
 	app := fiber.New()
 
    authenticatedRoute := app.Group("/api", middlewares.AuthMiddleware)
