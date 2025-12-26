@@ -30,7 +30,7 @@ func main() {
    // --- Create the worker pool ---
    const workerCount = 10
 
-   for w := 0; w < workerCount; w++ {
+   for range workerCount {
       go utils.ReplyMessages()
    }
 

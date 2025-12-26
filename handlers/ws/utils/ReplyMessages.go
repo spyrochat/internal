@@ -10,9 +10,10 @@ func ReplyMessages() {
 
 		// Deliver to the receiver if connected
 		if client, ok := ActiveUsers[receiverID]; ok {
+			fmt.Println("Sender Message: ", senderMsg, "Receiver ID: ", receiverID)
 			_ = client.Conn.WriteMessage(1, []byte(senderMsg))
+		} else {
+			fmt.Printf("User %s not connected\n", receiverID)
 		}
-
-		fmt.Println("Sender Message: ", senderMsg, "Receiver ID: ", receiverID)
 	}
 }
