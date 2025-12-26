@@ -9,7 +9,6 @@ import (
 	"path/filepath"
 
 	"github.com/gofiber/fiber/v2"
-	"github.com/gofiber/fiber/v2/middleware/cors"
 )
 
 func main() {
@@ -28,8 +27,6 @@ func main() {
 	//defer os.Remove(SOCK_FILE)
 	
 	app := fiber.New()
-
-   app.Use(cors.New(cors.ConfigDefault))
 
    authenticatedRoute := app.Group("/api", middlewares.AuthMiddleware)
 	wsRoute := app.Group("/ws", middlewares.WebsocketMiddleware)

@@ -1,10 +1,11 @@
 package middlewares
 
 import (
-  "spyrochat/utils"
+	"spyrochat/utils"
 
-   "os"
-  "github.com/gofiber/fiber/v2"
+	"os"
+
+	"github.com/gofiber/fiber/v2"
 )
 
 func AuthMiddleware(c *fiber.Ctx) error {
