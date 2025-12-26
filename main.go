@@ -1,13 +1,15 @@
 package main
 
 import (
-   "spyrochat/routes"
-   "spyrochat/middlewares"
+	"spyrochat/middlewares"
+	"spyrochat/routes"
 
-   "os"
-   "log"
-   "path/filepath"
-   "github.com/gofiber/fiber/v2"
+	"log"
+	"os"
+	"path/filepath"
+
+	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/cors"
 )
 
 func main() {
@@ -18,7 +20,7 @@ func main() {
    //os.Remove(SOCK_FILE)
 
    //ln, err := net.Listen("unix", SOCK_FILE)
-   if err != nil { panic(err.Error()) }
+   // if err != nil { panic(err.Error()) }
 
    //os.Chmod(SOCK_FILE, 0777)
 
@@ -26,12 +28,14 @@ func main() {
 	//defer os.Remove(SOCK_FILE)
 	
 	app := fiber.New()
-	
-	wsRoute := app.Use("/ws", middlewares.WebsocketMiddleware)
-   authenticatedRoute := app.Use(middlewares.AuthMiddleware)
 
-   routes.WsRouter(wsRoute)
+   app.Use(cors.New(cors.ConfigDefault))
+
+   authenticatedRoute := app.Group("/api", middlewares.AuthMiddleware)
+	wsRoute := app.Group("/ws", middlewares.WebsocketMiddleware)
+
    routes.Router(authenticatedRoute)
+   routes.WsRouter(wsRoute)
 
 	log.Fatal(app.Listen(":8000"))
 }

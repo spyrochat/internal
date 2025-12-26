@@ -1,10 +1,11 @@
 package handlers
 
 import (
-   "spyrochat/utils"
+	"spyrochat/utils"
 
-   "fmt"
-   "github.com/gofiber/fiber/v2"
+	"fmt"
+
+	"github.com/gofiber/fiber/v2"
 )
 
 func NotifyHandler(c *fiber.Ctx) error {
